@@ -1,0 +1,82 @@
+﻿<Controls:MetroWindow x:Class="Youtube.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:YTube="clr-namespace:Youtube"
+        TitleCaps="False" 
+        x:Name="YTWindow" ShowMaxRestoreButton="False" ResizeMode="CanMinimize" Icon="YoutubeAppIcon.ico"
+        Title="{Binding TitleString,ElementName=YTWindow}" Height="450" Width="985" MinHeight="450" MinWidth="985" MaxHeight="450" MaxWidth="985">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Controls:MetroWindow.WindowCommands >
+        <Controls:WindowCommands x:Name="WinCommands">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SearchBtn" Content="Search" Click="SearchVideos" />
+                <Border BorderBrush="{x:Null}" Height="auto">
+                    <Border.Resources>
+                        <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                    </Border.Resources>
+                    <TextBox x:Name="SearchText" Width="350" VerticalAlignment="Center" Controls:TextboxHelper.ClearTextButton="True" Controls:TextboxHelper.Watermark="Search..." PreviewKeyUp="SearchVideosK">
+                    </TextBox>
+                </Border>
+            </StackPanel>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+    <Controls:MetroContentControl>
+        <Grid>
+            <TabControl x:Name="SearchVSRelated" HorizontalAlignment="Left" Margin="10,0,10,25" Width="350">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabPanel}">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </TabControl.Resources>
+                <TabItem x:Name="VideoListTab" Header="Search">
+                    <TabItem.Content>
+                        <TabControl x:Name="VideoList" SelectionChanged="VideoList_SelectionChanged_1">
+                            <TabControl.Resources>
+                                <Style TargetType="{x:Type TabPanel}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </TabControl.Resources>
+                        </TabControl>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem x:Name="RelatedTab" Header="Related" Visibility="Collapsed">
+                    <TabItem.Content>
+                        <TabControl x:Name="RelatedVideos" SelectionChanged="RelatedList_SelectionChanged_1">
+                            <TabControl.Resources>
+                                <Style TargetType="{x:Type TabPanel}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </TabControl.Resources>
+                        </TabControl>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem x:Name="DescriptionTab" Header="Description" Visibility="Collapsed">
+                    <TabItem.Content>
+                        <Grid x:Name="DescriptionContent">
+                            <YTube:DescriptionPage x:Name="DescPage" Foreground="Blue"/>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
+            <Grid x:Name="BrowserGrid" HorizontalAlignment="Stretch" Margin="360,10,10,35" RenderTransformOrigin="0.5,0.5">
+                <WebBrowser x:Name="VideoBrowser" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" LoadCompleted="MakeBrowserVisible" />
+            </Grid>
+            <Grid x:Name="StatusBar" Margin="10,0,0,0" Height="25" VerticalAlignment="Bottom" Background="{DynamicResource ControlBackgroundBrush}">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Height="{Binding Height,ElementName=StatusBar}" Width="{Binding STextLength}" Content="{Binding StatusText,ElementName=YTWindow}"/>
+                <YTube:LoadingAnimation x:Name="Loading" Visibility="Hidden" Foreground="{DynamicResource HighlightDarkColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            </Grid>
+        </Grid>
+    </Controls:MetroContentControl>
+</Controls:MetroWindow>

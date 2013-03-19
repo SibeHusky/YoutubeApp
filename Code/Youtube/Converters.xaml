@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:yt="clr-namespace:Youtube">
+    <yt:DislikesConverter x:Key="DislikesConverter" />
+    <yt:LikesConverter x:Key="LikesConverter" />
+    <yt:ViewsConverter x:Key="ViewsConverter" />
+    <yt:PublishedDateConverter x:Key="PublishedDateConverter" />
+    <yt:UpdatedDateConverter x:Key="UpdatedDateConverter" />
+</ResourceDictionary>
